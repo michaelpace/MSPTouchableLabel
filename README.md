@@ -18,6 +18,10 @@ Clone this repo, or just grab MSPTouchableLabel.h and MSPTouchableLabel.m.
 
 MIT
 
+### See also
+
+ - [TTTAttributedLabel](https://github.com/TTTAttributedLabel/TTTAttributedLabel)
+
 ### A few example applications:
 
 Replace text upon tap:
