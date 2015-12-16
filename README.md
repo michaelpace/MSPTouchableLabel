@@ -11,8 +11,7 @@ Clone this repo, or just grab MSPTouchableLabel.h and MSPTouchableLabel.m.
 
 ### Todos
 
- - put on CocoaPods
- - run Instruments on highlighting demo and improve performance
+ - Only draw sections of label which have changed since last draw, and potentially following sections if they are moved too.
 
 ### License
 
