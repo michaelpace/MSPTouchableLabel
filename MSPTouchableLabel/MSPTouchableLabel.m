@@ -61,7 +61,7 @@
 
 #pragma mark - UIResponder
 
-- (void)touchesBegan:(NSSet<UITouch*>*)touches withEvent:(UIEvent*)event {
+- (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
     NSNumber* indexForTapCoordinates = [self indexForTouchEvent:event];
     
     if (indexForTapCoordinates == nil) {
@@ -77,7 +77,7 @@
     [self setNeedsDisplay];
 }
 
-- (void)touchesMoved:(NSSet<UITouch*>*)touches withEvent:(UIEvent*)event {
+- (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     NSNumber* indexForTapCoordinates = [self indexForTouchEvent:event];
     
     if (indexForTapCoordinates == nil || self.lastIndexTouched == nil || [indexForTapCoordinates isEqualToNumber:self.lastIndexTouched]) {
@@ -94,7 +94,7 @@
     [self setNeedsDisplay];
 }
 
-- (void)touchesEnded:(NSSet<UITouch*>*)touches withEvent:(UIEvent*)event {
+- (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
     NSNumber* indexForTapCoordinates = [self indexForTouchEvent:event];
     
     if (indexForTapCoordinates == nil) {

@@ -30,7 +30,7 @@
 			containerPortal = ACED5CB51ADB217D009EBB98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = ACED5CBC1ADB217D009EBB98;
-			remoteInfo = MSPTappableTextField;
+			remoteInfo = MSPTouchableLabel;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -152,8 +152,7 @@
 				64BFF18E1C20CBFC004C92F6 /* MSPTouchableLabelTests.m */,
 				ACED5CDA1ADB217D009EBB98 /* Supporting Files */,
 			);
-			name = MSPTouchableLabelTests;
-			path = MSPTappableTextFieldTests;
+			path = MSPTouchableLabelTests;
 			sourceTree = "<group>";
 		};
 		ACED5CDA1ADB217D009EBB98 /* Supporting Files */ = {
@@ -180,7 +179,7 @@
 			dependencies = (
 			);
 			name = MSPTouchableLabel;
-			productName = MSPTappableTextField;
+			productName = MSPTouchableLabel;
 			productReference = ACED5CBD1ADB217D009EBB98 /* MSPTouchableLabel.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -198,7 +197,7 @@
 				ACED5CD81ADB217D009EBB98 /* PBXTargetDependency */,
 			);
 			name = MSPTouchableLabelTests;
-			productName = MSPTappableTextFieldTests;
+			productName = MSPTouchableLabelTests;
 			productReference = ACED5CD61ADB217D009EBB98 /* MSPTouchableLabel.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -333,6 +332,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -351,7 +351,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -375,6 +375,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -386,7 +387,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

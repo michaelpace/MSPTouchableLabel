@@ -1,3 +1,4 @@
 language: objective-c
 xcode_project: MSPTouchableLabel.xcodeproj
 xcode_scheme: MSPTouchableLabelTests
+xcode_sdk: iphonesimulator8.1

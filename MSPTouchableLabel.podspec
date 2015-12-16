@@ -6,5 +6,5 @@ Pod::Spec.new do |s|
   s.summary      = 'Touchable label.'
   s.authors      = { 'Michael Pace' => 'mpace1027@gmail.com' }
   s.source       = { :git => 'https://github.com/michaelpace/MSPTouchableLabel.git' }
-  s.source_files = 'MSPTouchableLabel/MSPTouhableLabel.{h,m}'
+  s.source_files = 'MSPTouchableLabel/MSPTouchableLabel.{h,m}'
 end
