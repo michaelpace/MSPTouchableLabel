@@ -211,9 +211,9 @@
     
     NSArray* nonWhitespaceSections = [[string componentsSeparatedByCharactersInSet:whitespaceAndNewlineCharacterSet] filteredArrayUsingPredicate:hasLengthPredicate];
     NSArray* whitespaceSections = [[string componentsSeparatedByCharactersInSet:nonWhitespaceAndNewlineCharacterSet] filteredArrayUsingPredicate:hasLengthPredicate];
-    BOOL startWithWhitespaceSections = [[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:[string characterAtIndex:0]];
     NSMutableArray* drawablePieces = [[NSMutableArray alloc] initWithCapacity:nonWhitespaceSections.count + whitespaceSections.count];
     
+    BOOL startWithWhitespaceSections = string.length && [[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:[string characterAtIndex:0]];
     for (int i = 0; i < nonWhitespaceSections.count + whitespaceSections.count; i++) {
         BOOL currentSectionIsWhitespace = (startWithWhitespaceSections && i % 2 == 0) || (!startWithWhitespaceSections && i % 2 != 0);
         NSString* currentSection = currentSectionIsWhitespace ? [whitespaceSections objectAtIndex:i/2] : [nonWhitespaceSections objectAtIndex:i/2];
