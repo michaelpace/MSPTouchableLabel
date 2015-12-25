@@ -44,6 +44,7 @@
 }
 
 - (void)configureSelf {
+    self.multiLineRenderingOptimizations = YES;
     self.userInteractionEnabled = YES;
     self.defaultAttributes = @{ NSFontAttributeName: self.font };
 }
@@ -125,13 +126,18 @@
     NSArray* drawablePieceToTextSectionMaps = [self mapTextSections:self.textSections toDrawablePieces:drawablePieces];
     
     CGFloat touchableLabelWidth = rect.size.width;
-    CGPoint currentDrawPosition = CGPointMake(0.0f, 0.0f);
+    CGPoint lookaheadDrawHead = CGPointMake(0.0f, 0.0f);
     NSCharacterSet* whitespaceAndNewlineCharacterSet = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     
     // as a side effect in this method, we want to populate self.indexToAreaMap so we can tell our delegate which index a user has interacted
     // with later on.
     self.indexToAreaMap = self.indexToAreaMap ?: [[NSMutableDictionary alloc] init];
     [self.indexToAreaMap removeAllObjects];
+    
+    NSString* bufferedString = @"";
+    NSDictionary* attributes = nil;
+    CGPoint actualDrawHead = CGPointMake(0.0f, 0.0f);
+    NSDictionary* previousAttributes = nil;
     
     // loop through our drawablePieces and draw them.
     for (int i = 0; i < drawablePieces.count; i++) {
@@ -140,10 +146,18 @@
         CGSize drawablePieceSize = [self sizeForDrawablePiece:drawablePiece withTextSectionChunks:textSectionChunks];
         
         // can we fit the drawablePiece on this line or should we move it to the next line?
-        if (currentDrawPosition.x + drawablePieceSize.width > touchableLabelWidth) {
-            // this goes over onto a new line.
-            currentDrawPosition.x = 0;
-            currentDrawPosition.y += drawablePieceSize.height;
+        if (lookaheadDrawHead.x + drawablePieceSize.width > touchableLabelWidth) {
+            lookaheadDrawHead.x = 0;
+            lookaheadDrawHead.y += drawablePieceSize.height;
+            
+            if (self.multiLineRenderingOptimizations && actualDrawHead.x == 0.0f) {
+                // if we're starting at x == 0, instead of drawing, just add a newline so we can batch drawAtPoint calls.
+                bufferedString = [bufferedString stringByAppendingString:@"\n"];
+            } else {
+                [bufferedString drawAtPoint:CGPointMake(actualDrawHead.x, actualDrawHead.y) withAttributes:previousAttributes];
+                actualDrawHead = CGPointMake(lookaheadDrawHead.x, lookaheadDrawHead.y);
+                bufferedString = @"";
+            }
             
             if ([drawablePiece stringByTrimmingCharactersInSet:whitespaceAndNewlineCharacterSet].length == 0) {
                 // don't start a new line with whitespace. might want to change this behavior in the future.
@@ -152,24 +166,38 @@
         }
         
         for (NSDictionary* chunk in textSectionChunks) {
-            // draw this chunk!
+            NSInteger textSectionIndex = [[chunk objectForKey:kMSPTouchableLabelKeyTextSectionIndex] integerValue];
+            attributes = [self attributesForIndex:textSectionIndex];
             NSRange range = [[chunk objectForKey:kMSPTouchableLabelKeySubstringRange] rangeValue];
             NSString* drawablePieceSubstring = [drawablePiece substringWithRange:range];
-            NSInteger textSectionIndex = [[chunk objectForKey:kMSPTouchableLabelKeyTextSectionIndex] integerValue];
-            NSDictionary* attributes = [self attributesForIndex:textSectionIndex];
-            CGSize drawablePieceSubstringSize = [drawablePieceSubstring sizeWithAttributes:attributes];
-            [drawablePieceSubstring drawAtPoint:CGPointMake(currentDrawPosition.x, currentDrawPosition.y) withAttributes:attributes];
             
-            // record where we drew this chunk!
+            // set previousAttributes to attributes the first time through the loop.
+            previousAttributes = previousAttributes ?: attributes;
+            if ([attributes isEqualToDictionary:previousAttributes]) {
+                bufferedString = [bufferedString stringByAppendingString:drawablePieceSubstring];
+            } else {
+                // draw previous chunk!
+                [bufferedString drawAtPoint:CGPointMake(actualDrawHead.x, actualDrawHead.y) withAttributes:previousAttributes];
+                actualDrawHead = CGPointMake(lookaheadDrawHead.x, lookaheadDrawHead.y);
+                bufferedString = drawablePieceSubstring;
+            }
+            
+            // record where we place this chunk!
+            CGSize drawablePieceSubstringSize = [drawablePieceSubstring sizeWithAttributes:attributes];
             NSMutableArray* areasForCurrentWord = [self.indexToAreaMap objectForKey:@(textSectionIndex)] ?: [[NSMutableArray alloc] init];
-            CGRect wordArea = CGRectMake(currentDrawPosition.x, currentDrawPosition.y, drawablePieceSubstringSize.width, drawablePieceSubstringSize.height);
+            CGRect wordArea = CGRectMake(lookaheadDrawHead.x, lookaheadDrawHead.y, drawablePieceSubstringSize.width, drawablePieceSubstringSize.height);
             // can't add primitive CGRect to a collection. wrap it into an NSValue and unwrap later.
             [areasForCurrentWord addObject:[NSValue valueWithCGRect:wordArea]];
             [self.indexToAreaMap setObject:areasForCurrentWord forKey:@(textSectionIndex)];
             
-            currentDrawPosition.x += drawablePieceSubstringSize.width;
+            lookaheadDrawHead.x += drawablePieceSubstringSize.width;
+            previousAttributes = attributes;
         }
     }
+    
+    // this is the last chunk and we didn't draw it yet. draw it here.
+    [bufferedString drawAtPoint:CGPointMake(actualDrawHead.x, actualDrawHead.y) withAttributes:attributes];
+    actualDrawHead = CGPointMake(lookaheadDrawHead.x, lookaheadDrawHead.y);
 }
 
 #pragma mark - ()
