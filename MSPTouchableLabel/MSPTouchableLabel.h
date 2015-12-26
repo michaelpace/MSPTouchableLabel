@@ -71,7 +71,7 @@ IB_DESIGNABLE
  @brief         On by default. When on, modifies the strings passed in MSPTouchableLabelDataSource's textForTouchableLabel: to improve rendering performance.
  @discussion    Improves performance by inserting newlines (\n) into the strings to be rendered, and drawing multiple lines at once instead of drawing line by line. This could change the look of the rendered text (e.g., when this is on, a background highlight with NSBackgroundColorAttributeName will extend to the far-right edge of the drawRect before continuing to the next line instead of only highlighting directly behind text that is being rendered).
  */
-@property (assign) BOOL multiLineRenderingOptimizations;
+@property (assign) BOOL multiLineRenderingOptimizationsEnabled;
 
 @property (nonatomic, strong) id<MSPTouchableLabelDataSource> dataSource;
 @property (nonatomic, strong) id<MSPTouchableLabelDelegate> delegate;

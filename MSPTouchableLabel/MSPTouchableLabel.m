@@ -13,7 +13,6 @@
 
 @interface MSPTouchableLabel()
 
-@property (nonatomic, strong) NSArray* textSections;
 @property (nonatomic, strong) NSMutableDictionary* indexToAreaMap;
 @property (nonatomic, strong) NSNumber* lastIndexTouched;
 
@@ -44,7 +43,7 @@
 }
 
 - (void)configureSelf {
-    self.multiLineRenderingOptimizations = YES;
+    self.multiLineRenderingOptimizationsEnabled = YES;
     self.userInteractionEnabled = YES;
     self.defaultAttributes = @{ NSFontAttributeName: self.font };
 }
@@ -114,16 +113,16 @@
 #pragma mark - UILabel
 
 - (void)drawTextInRect:(CGRect)rect {
-    self.textSections = [self.dataSource textForTouchableLabel:self];
+    NSArray* textSections = [self.dataSource textForTouchableLabel:self];
     
     // which characters should be grouped when drawing? e.g., if user passed in @[@"he", @"llo w", @"orld"], we'd want
     // the characters in "hello" to be drawn together even though they were passed in as different textSections, and same
     // with "world".
-    NSArray* drawablePieces = [self drawablePiecesWithinString:[self.textSections componentsJoinedByString:@""]];
+    NSArray* drawablePieces = [self drawablePiecesWithinString:[textSections componentsJoinedByString:@""]];
     
     // which textSections apply to which drawablePieces? this can affect how the drawablePieces are drawn (e.g., drawablePiece "hello"
     // being made up of 32-point black "h" and 20-point gray "ello").
-    NSArray* drawablePieceToTextSectionMaps = [self mapTextSections:self.textSections toDrawablePieces:drawablePieces];
+    NSArray* drawablePieceToTextSectionMaps = [self mapTextSections:textSections toDrawablePieces:drawablePieces];
     
     CGFloat touchableLabelWidth = rect.size.width;
     CGPoint lookaheadDrawHead = CGPointMake(0.0f, 0.0f);
@@ -150,7 +149,7 @@
             lookaheadDrawHead.x = 0;
             lookaheadDrawHead.y += drawablePieceSize.height;
             
-            if (self.multiLineRenderingOptimizations && actualDrawHead.x == 0.0f) {
+            if (self.multiLineRenderingOptimizationsEnabled && actualDrawHead.x == 0.0f) {
                 // if we're starting at x == 0, instead of drawing, just add a newline so we can batch drawAtPoint calls.
                 bufferedString = [bufferedString stringByAppendingString:@"\n"];
             } else {
