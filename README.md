@@ -14,10 +14,6 @@ Add `pod "MSPTouchableLabel"` to your Podfile and run `pod install` or `pod upda
 
 MIT
 
-### Todos
-
- - Only draw sections of label which have changed since last draw, and potentially following sections if they are moved too.
-
 ### See also
 
  - [TTTAttributedLabel](https://github.com/TTTAttributedLabel/TTTAttributedLabel)
