@@ -35,6 +35,12 @@ IB_DESIGNABLE
  */
 - (void)touchableLabel:(MSPTouchableLabel*)touchableLabel touchesDidEndAtIndex:(NSInteger)index;
 
+/**
+ @discussion            Called when a user's touch moves off of the MSPTouchableLabel.
+ @param touchableLabel  The current MSPTouchableLabel.
+ */
+- (void)touchesDidMoveFromLabel:(MSPTouchableLabel*)touchableLabel;
+
 @end
 
 @protocol MSPTouchableLabelDataSource
@@ -61,11 +67,6 @@ IB_DESIGNABLE
  @discussion            A label users can interact with. Use it like a UITableView. Set a dataSource to provide text for the label and a delegate to find out how the user interacts with the label. Do not set the `text` property of an MSPTouchableLabel.
  */
 @interface MSPTouchableLabel : UILabel
-
-/**
- @brief Default attributes for the label. Can override per index with MSPTouchableLabelDataSource's attributesForTouchableLabel:atIndex.
- */
-@property (nonatomic, strong) NSDictionary* defaultAttributes;
 
 /**
  @brief         On by default. When on, modifies the strings passed in MSPTouchableLabelDataSource's textForTouchableLabel: to improve rendering performance.

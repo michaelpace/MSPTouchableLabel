@@ -42,10 +42,8 @@
     self.touchableLabel.dataSource = self;
     self.touchableLabel.delegate = self;
     self.touchableLabel.multiLineRenderingOptimizationsEnabled = NO;
-    self.touchableLabel.defaultAttributes = @{
-                                                 NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:18.0f],
-                                                 NSBackgroundColorAttributeName: [UIColor clearColor]
-                                                 };
+    self.touchableLabel.font = [UIFont fontWithName:@"Helvetica" size:18.0f];
+    self.touchableLabel.backgroundColor = [UIColor clearColor];
 }
 
 #pragma mark - MSPTouchableLabelDataSource

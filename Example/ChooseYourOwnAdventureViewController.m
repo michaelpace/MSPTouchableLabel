@@ -27,7 +27,7 @@
     
     self.touchableLabel.delegate = self;
     self.touchableLabel.dataSource = self;
-    self.touchableLabel.defaultAttributes = [self attributesForNormalSubstring];
+    self.touchableLabel.font = [UIFont systemFontOfSize:18.0f];
 }
 
 #pragma mark - MSPTouchableLabelDataSource
@@ -59,13 +59,6 @@
 }
 
 #pragma mark - ()
-
-- (NSDictionary*)attributesForNormalSubstring {
-    return @{
-             NSFontAttributeName:[UIFont systemFontOfSize:18.0f],
-             NSForegroundColorAttributeName: [UIColor blackColor]
-             };
-}
 
 - (NSDictionary*)attributesForTappableSubstring {
     return @{

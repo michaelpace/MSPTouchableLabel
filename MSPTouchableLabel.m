@@ -45,7 +45,6 @@
 - (void)configureSelf {
     self.multiLineRenderingOptimizationsEnabled = YES;
     self.userInteractionEnabled = YES;
-    self.defaultAttributes = @{ NSFontAttributeName: self.font };
 }
 
 #pragma mark - Getters and setters
@@ -80,14 +79,20 @@
 - (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     NSNumber* indexForTapCoordinates = [self indexForTouchEvent:event];
     
-    if (indexForTapCoordinates == nil || self.lastIndexTouched == nil || [indexForTapCoordinates isEqualToNumber:self.lastIndexTouched]) {
-        // only tell the delegate if a new & valid index was touched.
+    if (self.lastIndexTouched == nil || [indexForTapCoordinates isEqualToNumber:self.lastIndexTouched]) {
+        // only tell the delegate if a new index was touched, and only if the touch began on a label.
         return;
     }
     self.lastIndexTouched = indexForTapCoordinates;
     
-    if ([(NSObject*)self.dataSource respondsToSelector:@selector(touchableLabel:touchesDidMoveToIndex:)]) {
-        [self.delegate touchableLabel:self touchesDidMoveToIndex:indexForTapCoordinates.integerValue];
+    if (indexForTapCoordinates == nil) {
+        if ([(NSObject*)self.dataSource respondsToSelector:@selector(touchesDidMoveFromLabel:)]) {
+            [self.delegate touchesDidMoveFromLabel:self];
+        }
+    } else {
+        if ([(NSObject*)self.dataSource respondsToSelector:@selector(touchableLabel:touchesDidMoveToIndex:)]) {
+            [self.delegate touchableLabel:self touchesDidMoveToIndex:indexForTapCoordinates.integerValue];
+        }
     }
     
     // setNeedsDisplay in case delegate updated our data source
@@ -217,7 +222,7 @@
 }
 
 - (NSDictionary*)attributesForIndex:(NSInteger)index {
-    NSDictionary* attributes = self.defaultAttributes;
+    NSDictionary* attributes = [self defaultAttributes];
     
     if ([(NSObject*)self.dataSource respondsToSelector:@selector(attributesForTouchableLabel:atIndex:)]) {
         NSMutableDictionary* newAttributes = [attributes mutableCopy];
@@ -309,6 +314,14 @@
     }
     
     return drawablePieceSize;
+}
+
+- (NSDictionary*)defaultAttributes {
+    return @{
+             NSFontAttributeName: self.font,
+             NSForegroundColorAttributeName: self.textColor,
+             NSBackgroundColorAttributeName: self.backgroundColor
+             };
 }
 
 @end

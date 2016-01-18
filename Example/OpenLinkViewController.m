@@ -30,7 +30,7 @@
     
     self.touchableLabel.dataSource = self;
     self.touchableLabel.delegate = self;
-    self.touchableLabel.defaultAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:26.0f] };
+    self.touchableLabel.font = [UIFont fontWithName:@"Helvetica" size:26.0f];
     
     self.webviewContainerView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.webviewContainerView.layer.borderWidth = 1.0f;

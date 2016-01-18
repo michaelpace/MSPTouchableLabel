@@ -13,7 +13,6 @@
 
 @interface ReplaceTextViewController ()<MSPTouchableLabelDataSource, MSPTouchableLabelDelegate>
 
-@property (nonatomic, strong) NSString* favoriteFood;
 @property (nonatomic, strong) NSArray* substrings;
 @property (nonatomic, strong) NSMutableArray* ewws;
 @property (weak, nonatomic) IBOutlet MSPTouchableLabel *touchableLabel;
@@ -29,7 +28,7 @@
     
     self.touchableLabel.dataSource = self;
     self.touchableLabel.delegate = self;
-    self.touchableLabel.defaultAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:24.0f] };
+    self.touchableLabel.font = [UIFont fontWithName:@"Helvetica" size:24.0f];
     
     self.substrings = @[@"Hello", @", ", @"how", @" ", @"are", @" ", @"you", @"?"];
     
@@ -58,7 +57,7 @@
 #pragma mark - MSPTouchableLabelDelegate
 
 - (void)touchableLabel:(MSPTouchableLabel*)touchableLabel touchesDidEndAtIndex:(NSInteger)index {
-    // only replace words, not whitespace or punctuation
+    // only replace words, not whitespace or punctuation. (in a real app you'd want a more robust way to check for valid indices than this).
     if (index % 2 == 0) {
         self.ewws[index] = @(![self.ewws[index] boolValue]);
     }

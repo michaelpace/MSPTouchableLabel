@@ -33,10 +33,7 @@
     
     self.touchableLabel.dataSource = self;
     self.touchableLabel.delegate = self;
-    self.touchableLabel.defaultAttributes = @{
-                                                 NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:32.0f],
-                                                 NSForegroundColorAttributeName: [UIColor blackColor]
-                                                 };
+    self.touchableLabel.font = [UIFont fontWithName:@"Helvetica" size:32.0f];
     
     self.textField.alpha = kMSPAlphaInvisible;
     
