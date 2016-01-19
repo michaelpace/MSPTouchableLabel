@@ -27,12 +27,12 @@ You can optionally implement MSPTouchableLabelDelegate methods to find out about
 #import "MSPTouchableLabel.h"
 
 @interface BasicUsageViewController()<MSPTouchableLabelDataSource, MSPTouchableLabelDelegate>
+
 @property (nonatomic, strong) NSNumber* tapCount;
+
 @end
 
 @implementation BasicUsageViewController
-
-#pragma mark - UIViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,13 +46,9 @@ You can optionally implement MSPTouchableLabelDelegate methods to find out about
     self.tapCount = @0;
 }
 
-#pragma mark - MSPTouchableLabelDataSource
-
 - (NSArray*)textForTouchableLabel:(MSPTouchableLabel*)touchableLabel {
     return @[@"You have ", @"tapped", @" the verb in this sentence ", self.tapCount.stringValue, @" times."];
 }
-
-#pragma mark - MSPTouchableLabelDelegate
 
 - (void)touchableLabel:(MSPTouchableLabel*)touchableLabel touchesDidEndAtIndex:(NSInteger)index {
     if (index == 1) {  // index of the verb, "tapped"
