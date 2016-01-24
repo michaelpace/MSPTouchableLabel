@@ -11,6 +11,24 @@ IB_DESIGNABLE
 
 @class MSPTouchableLabel;
 
+/**
+ @discussion            Representation of a touch event on an MSPTouchableLabel.
+ */
+typedef struct {
+    /** Location of the touch relative to the MSPTouchableLabel. */
+    CGPoint point;
+    
+    /** Index of the touched piece of text (as supplied by MSPTouchableLabelDataSource's textForTouchableLabel:). */
+    NSInteger index;
+    
+    /** Size of the touched piece of text as if it were drawn on one line. This may or may not be how the piece of text is actually drawn. Intended to be used with MSPTouchEventLocation.adjustedPoint. */
+    CGSize textPieceSize;
+    
+    /** Adjusted location of the touch. Indicates where the touch fell within MSPTouchEventLocation.textPieceSize. */
+    CGPoint adjustedPoint;
+    
+} MSPTouchEventLocation;
+
 @protocol MSPTouchableLabelDelegate
 
 @optional
@@ -69,12 +87,18 @@ IB_DESIGNABLE
 @interface MSPTouchableLabel : UILabel
 
 /**
- @brief         On by default. When on, modifies the strings passed in MSPTouchableLabelDataSource's textForTouchableLabel: to improve rendering performance.
- @discussion    Improves performance by inserting newlines (\n) into the strings to be rendered, and drawing multiple lines at once instead of drawing line by line. This could change the look of the rendered text (e.g., when this is on, a background highlight with NSBackgroundColorAttributeName will extend to the far-right edge of the drawRect before continuing to the next line instead of only highlighting directly behind text that is being rendered).
+ @brief                 On by default. When on, modifies the strings passed in MSPTouchableLabelDataSource's textForTouchableLabel: to improve rendering performance.
+ @discussion            Improves performance by inserting newlines (\n) into the strings to be rendered, and drawing multiple lines at once instead of drawing line by line. This could change the look of the rendered text (e.g., when this is on, a background highlight with NSBackgroundColorAttributeName will extend to the far-right edge of the drawRect before continuing to the next line instead of only highlighting directly behind text that is being rendered).
  */
 @property (assign) BOOL multiLineRenderingOptimizationsEnabled;
 
 @property (nonatomic, strong) id<MSPTouchableLabelDataSource> dataSource;
 @property (nonatomic, strong) id<MSPTouchableLabelDelegate> delegate;
+
+/**
+ @param point           CGPoint representing a point on the MSPTouchableLabel.
+ @return                Index of the element at the given point. Returns nil if there is no element at that point.
+ */
+- (MSPTouchEventLocation)touchEventLocationAtPoint:(CGPoint)point;
 
 @end

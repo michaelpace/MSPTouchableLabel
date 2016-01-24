@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		640EABFC1C1659D2000C42C4 /* DemoChooserTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 640EABFB1C1659D2000C42C4 /* DemoChooserTableViewController.m */; };
 		640EABFF1C165DFD000C42C4 /* MadLibsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 640EABFE1C165DFD000C42C4 /* MadLibsViewController.m */; };
+		649372281C558608007F0130 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 649372271C558608007F0130 /* main.m */; };
 		64B2CE601C1A16D0001042C1 /* OpenLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64B2CE5F1C1A16D0001042C1 /* OpenLinkViewController.m */; };
 		64BFF1911C20CC39004C92F6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64BFF1901C20CC39004C92F6 /* Info.plist */; };
 		64BFF1921C20CE18004C92F6 /* MSPTouchableLabelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BFF18E1C20CBFC004C92F6 /* MSPTouchableLabelTests.m */; };
 		64EEB86A1C1775DB004D4D67 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64EEB8681C1775DB004D4D67 /* DemoViewController.m */; };
 		64EEB86E1C1778D9004D4D67 /* ChooseYourOwnAdventureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64EEB86D1C1778D9004D4D67 /* ChooseYourOwnAdventureViewController.m */; };
 		64EEB8711C177A91004D4D67 /* HighlightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64EEB8701C177A91004D4D67 /* HighlightViewController.m */; };
-		ACED5CC31ADB217D009EBB98 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ACED5CC21ADB217D009EBB98 /* main.m */; };
 		ACED5CC61ADB217D009EBB98 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ACED5CC51ADB217D009EBB98 /* AppDelegate.m */; };
 		ACED5CC91ADB217D009EBB98 /* ReplaceTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACED5CC81ADB217D009EBB98 /* ReplaceTextViewController.m */; };
 		ACED5CCC1ADB217D009EBB98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACED5CCA1ADB217D009EBB98 /* Main.storyboard */; };
@@ -35,33 +35,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		640EABFA1C1659D2000C42C4 /* DemoChooserTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoChooserTableViewController.h; path = ../Example/DemoChooserTableViewController.h; sourceTree = "<group>"; };
-		640EABFB1C1659D2000C42C4 /* DemoChooserTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoChooserTableViewController.m; path = ../Example/DemoChooserTableViewController.m; sourceTree = "<group>"; };
-		640EABFD1C165DFD000C42C4 /* MadLibsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MadLibsViewController.h; path = ../Example/MadLibsViewController.h; sourceTree = "<group>"; };
-		640EABFE1C165DFD000C42C4 /* MadLibsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MadLibsViewController.m; path = ../Example/MadLibsViewController.m; sourceTree = "<group>"; };
-		64B2CE5E1C1A16D0001042C1 /* OpenLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenLinkViewController.h; path = ../Example/OpenLinkViewController.h; sourceTree = "<group>"; };
-		64B2CE5F1C1A16D0001042C1 /* OpenLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenLinkViewController.m; path = ../Example/OpenLinkViewController.m; sourceTree = "<group>"; };
+		640EABFA1C1659D2000C42C4 /* DemoChooserTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoChooserTableViewController.h; sourceTree = "<group>"; };
+		640EABFB1C1659D2000C42C4 /* DemoChooserTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoChooserTableViewController.m; sourceTree = "<group>"; };
+		640EABFD1C165DFD000C42C4 /* MadLibsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MadLibsViewController.h; sourceTree = "<group>"; };
+		640EABFE1C165DFD000C42C4 /* MadLibsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MadLibsViewController.m; sourceTree = "<group>"; };
+		649372271C558608007F0130 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Examples/main.m; sourceTree = SOURCE_ROOT; };
+		64B2CE5E1C1A16D0001042C1 /* OpenLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenLinkViewController.h; sourceTree = "<group>"; };
+		64B2CE5F1C1A16D0001042C1 /* OpenLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenLinkViewController.m; sourceTree = "<group>"; };
 		64BFF18E1C20CBFC004C92F6 /* MSPTouchableLabelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPTouchableLabelTests.m; path = MSPTouchableLabelTests/MSPTouchableLabelTests.m; sourceTree = SOURCE_ROOT; };
 		64BFF1901C20CC39004C92F6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MSPTouchableLabelTests/Info.plist; sourceTree = SOURCE_ROOT; };
-		64EEB8671C1775DB004D4D67 /* DemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoViewController.h; path = ../Example/DemoViewController.h; sourceTree = "<group>"; };
-		64EEB8681C1775DB004D4D67 /* DemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoViewController.m; path = ../Example/DemoViewController.m; sourceTree = "<group>"; };
-		64EEB86C1C1778D9004D4D67 /* ChooseYourOwnAdventureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChooseYourOwnAdventureViewController.h; path = ../Example/ChooseYourOwnAdventureViewController.h; sourceTree = "<group>"; };
-		64EEB86D1C1778D9004D4D67 /* ChooseYourOwnAdventureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChooseYourOwnAdventureViewController.m; path = ../Example/ChooseYourOwnAdventureViewController.m; sourceTree = "<group>"; };
-		64EEB86F1C177A91004D4D67 /* HighlightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HighlightViewController.h; path = ../Example/HighlightViewController.h; sourceTree = "<group>"; };
-		64EEB8701C177A91004D4D67 /* HighlightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HighlightViewController.m; path = ../Example/HighlightViewController.m; sourceTree = "<group>"; };
+		64EEB8671C1775DB004D4D67 /* DemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
+		64EEB8681C1775DB004D4D67 /* DemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
+		64EEB86C1C1778D9004D4D67 /* ChooseYourOwnAdventureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseYourOwnAdventureViewController.h; sourceTree = "<group>"; };
+		64EEB86D1C1778D9004D4D67 /* ChooseYourOwnAdventureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseYourOwnAdventureViewController.m; sourceTree = "<group>"; };
+		64EEB86F1C177A91004D4D67 /* HighlightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightViewController.h; sourceTree = "<group>"; };
+		64EEB8701C177A91004D4D67 /* HighlightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightViewController.m; sourceTree = "<group>"; };
 		ACED5CBD1ADB217D009EBB98 /* MSPTouchableLabel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MSPTouchableLabel.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		ACED5CC11ADB217D009EBB98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Example/Info.plist; sourceTree = "<group>"; };
-		ACED5CC21ADB217D009EBB98 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../Example/main.m; sourceTree = "<group>"; };
-		ACED5CC41ADB217D009EBB98 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Example/AppDelegate.h; sourceTree = "<group>"; };
-		ACED5CC51ADB217D009EBB98 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ../Example/AppDelegate.m; sourceTree = "<group>"; };
-		ACED5CC71ADB217D009EBB98 /* ReplaceTextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ReplaceTextViewController.h; path = ../Example/ReplaceTextViewController.h; sourceTree = "<group>"; };
-		ACED5CC81ADB217D009EBB98 /* ReplaceTextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ReplaceTextViewController.m; path = ../Example/ReplaceTextViewController.m; sourceTree = "<group>"; };
+		ACED5CC11ADB217D009EBB98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Examples/Info.plist; sourceTree = "<group>"; };
+		ACED5CC41ADB217D009EBB98 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		ACED5CC51ADB217D009EBB98 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		ACED5CC71ADB217D009EBB98 /* ReplaceTextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReplaceTextViewController.h; sourceTree = "<group>"; };
+		ACED5CC81ADB217D009EBB98 /* ReplaceTextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReplaceTextViewController.m; sourceTree = "<group>"; };
 		ACED5CCB1ADB217D009EBB98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		ACED5CCD1ADB217D009EBB98 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Example/Images.xcassets; sourceTree = "<group>"; };
+		ACED5CCD1ADB217D009EBB98 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ACED5CD01ADB217D009EBB98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		ACED5CD61ADB217D009EBB98 /* MSPTouchableLabel.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MSPTouchableLabel.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		ACED5CE61ADB2244009EBB98 /* MSPTouchableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSPTouchableLabel.h; sourceTree = SOURCE_ROOT; };
-		ACED5CE71ADB2244009EBB98 /* MSPTouchableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPTouchableLabel.m; path = ../MSPTouchableLabel.m; sourceTree = "<group>"; };
+		ACED5CE61ADB2244009EBB98 /* MSPTouchableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPTouchableLabel.h; path = Source/MSPTouchableLabel.h; sourceTree = SOURCE_ROOT; };
+		ACED5CE71ADB2244009EBB98 /* MSPTouchableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPTouchableLabel.m; path = Source/MSPTouchableLabel.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +82,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		648DA0251C16528300018D4A /* Example */ = {
+		648DA0251C16528300018D4A /* Examples */ = {
 			isa = PBXGroup;
 			children = (
 				ACED5CC41ADB217D009EBB98 /* AppDelegate.h */,
@@ -105,7 +105,16 @@
 				64B2CE5E1C1A16D0001042C1 /* OpenLinkViewController.h */,
 				64B2CE5F1C1A16D0001042C1 /* OpenLinkViewController.m */,
 			);
-			name = Example;
+			path = Examples;
+			sourceTree = SOURCE_ROOT;
+		};
+		64E7C9911C5587D300EAC9A1 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				ACED5CE61ADB2244009EBB98 /* MSPTouchableLabel.h */,
+				ACED5CE71ADB2244009EBB98 /* MSPTouchableLabel.m */,
+			);
+			name = Source;
 			sourceTree = "<group>";
 		};
 		ACED5CB41ADB217D009EBB98 = {
@@ -129,9 +138,8 @@
 		ACED5CBF1ADB217D009EBB98 /* MSPTouchableLabel */ = {
 			isa = PBXGroup;
 			children = (
-				ACED5CE61ADB2244009EBB98 /* MSPTouchableLabel.h */,
-				ACED5CE71ADB2244009EBB98 /* MSPTouchableLabel.m */,
-				648DA0251C16528300018D4A /* Example */,
+				64E7C9911C5587D300EAC9A1 /* Source */,
+				648DA0251C16528300018D4A /* Examples */,
 				ACED5CC01ADB217D009EBB98 /* Supporting Files */,
 			);
 			path = MSPTouchableLabel;
@@ -141,7 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				ACED5CC11ADB217D009EBB98 /* Info.plist */,
-				ACED5CC21ADB217D009EBB98 /* main.m */,
+				649372271C558608007F0130 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -264,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				649372281C558608007F0130 /* main.m in Sources */,
 				ACED5CC91ADB217D009EBB98 /* ReplaceTextViewController.m in Sources */,
 				64EEB8711C177A91004D4D67 /* HighlightViewController.m in Sources */,
 				64B2CE601C1A16D0001042C1 /* OpenLinkViewController.m in Sources */,
@@ -271,7 +280,6 @@
 				64EEB86E1C1778D9004D4D67 /* ChooseYourOwnAdventureViewController.m in Sources */,
 				ACED5CC61ADB217D009EBB98 /* AppDelegate.m in Sources */,
 				640EABFC1C1659D2000C42C4 /* DemoChooserTableViewController.m in Sources */,
-				ACED5CC31ADB217D009EBB98 /* main.m in Sources */,
 				64EEB86A1C1775DB004D4D67 /* DemoViewController.m in Sources */,
 				ACED5CE81ADB2244009EBB98 /* MSPTouchableLabel.m in Sources */,
 			);
@@ -302,7 +310,6 @@
 				ACED5CCB1ADB217D009EBB98 /* Base */,
 			);
 			name = Main.storyboard;
-			path = ../Example;
 			sourceTree = "<group>";
 		};
 		ACED5CCF1ADB217D009EBB98 /* LaunchScreen.xib */ = {
@@ -311,7 +318,6 @@
 				ACED5CD01ADB217D009EBB98 /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = ../Example;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -404,7 +410,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Examples/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.michaelstuartpasta.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = MSPTouchableLabel;
@@ -415,7 +421,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Examples/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.michaelstuartpasta.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = MSPTouchableLabel;

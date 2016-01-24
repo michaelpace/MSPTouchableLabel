@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MSPTouchableLabel"
-  s.version      = "0.3.0"
+  s.version      = "0.4.0"
   s.summary      = "UILabel subclass with UITableView -like data source and delegate for easy dynamic labels."
  s.description  = <<-DESC
     The MSPTouchableLabel class is a UILabel subclass which provides an interface
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Michael Pace" => "mpace1027@gmail.com" }
   s.platform     = :ios
-  s.source       = { :git => "https://github.com/michaelpace/MSPTouchableLabel.git", :tag => "0.3.0" }
-  s.source_files  = "MSPTouchableLabel.{h,m}"
+  s.source       = { :git => "https://github.com/michaelpace/MSPTouchableLabel.git", :tag => "0.4.0" }
+  s.source_files  = "Source/MSPTouchableLabel.{h,m}"
   s.requires_arc = true
 end

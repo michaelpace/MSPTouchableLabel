@@ -206,19 +206,51 @@
 
 #pragma mark - ()
 
-- (NSNumber*)indexForTouchEvent:(UIEvent*)event {
-    CGPoint tapCoordinates = [event.allTouches.anyObject locationInView:self];
+- (MSPTouchEventLocation)touchEventLocationAtPoint:(CGPoint)point {
+    MSPTouchEventLocation touchEventLocation = {};
+    
     for (NSNumber* index in self.indexToAreaMap) {
         NSArray* areas = self.indexToAreaMap[index];
-        for (NSValue* areaWrapper in areas) {
+        CGSize textPieceSize = CGSizeZero;
+        for (NSInteger i = 0; i < areas.count; i++) {
+            NSValue* areaWrapper = areas[i];
             CGRect area = [areaWrapper CGRectValue];
-            if (CGRectContainsPoint(area, tapCoordinates)) {
-                return index;
+            
+            if (CGRectContainsPoint(area, point)) {
+                CGPoint adjustedPoint = CGPointMake(point.x - area.origin.x, point.y - area.origin.y);
+                adjustedPoint.x += textPieceSize.width;
+                
+                for (; i < areas.count; i++) {
+                    textPieceSize.width += area.size.width;
+                    textPieceSize.height = MAX(textPieceSize.height, area.size.height);
+                }
+                
+                touchEventLocation.point = point;
+                touchEventLocation.index = index.integerValue;
+                touchEventLocation.textPieceSize = textPieceSize;
+                touchEventLocation.adjustedPoint = adjustedPoint;
+                
+                
+                return touchEventLocation;
             }
+            
+            textPieceSize.width += area.size.width;
+            textPieceSize.height = MAX(textPieceSize.height, area.size.height);
         }
     }
     
-    return nil;
+    touchEventLocation.point = CGPointZero;
+    touchEventLocation.index = -1;
+    touchEventLocation.textPieceSize = CGSizeZero;
+    touchEventLocation.adjustedPoint = CGPointZero;
+    
+    return touchEventLocation;
+}
+
+- (NSNumber*)indexForTouchEvent:(UIEvent*)event {
+    CGPoint tapCoordinates = [event.allTouches.anyObject locationInView:self];
+    MSPTouchEventLocation touchEventLocation = [self touchEventLocationAtPoint:tapCoordinates];
+    return @(touchEventLocation.index);
 }
 
 - (NSDictionary*)attributesForIndex:(NSInteger)index {

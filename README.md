@@ -5,7 +5,9 @@
 ![CocoaPods](http://img.shields.io/cocoapods/p/MSPTouchableLabel.svg?style=flat)
 ![CocoaPods](http://img.shields.io/cocoapods/v/MSPTouchableLabel.svg?style=flat)
 
-MSPTouchableLabel is a UILabel subclass which provides a UITableView -like interface for creating interactive labels. It has no dependencies. Run the sample app to see demos, or peek at the .gifs at the bottom of this document.
+MSPTouchableLabel is a UILabel subclass which provides a UITableView -like interface for creating interactive labels. It has no dependencies.
+
+**The public API of this pod may change since a 1.0.0 release hasn't been reached. Please use caution when upgrading. Not recommended for use in production apps.**
 
 ### Installation
 
@@ -61,7 +63,7 @@ You can optionally implement MSPTouchableLabelDelegate methods to find out about
 
 ```
 
-For larger examples, clone this repository and see the Example directory. Run the project to see them in action (or glance at the .gifs at the bottom of this document).
+For larger examples, clone this repository and see the Examples directory. Run the project to see them in action (or glance at the .gifs at the bottom of this document).
 
 ### Contributing
 
