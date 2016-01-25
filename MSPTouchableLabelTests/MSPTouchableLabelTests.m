@@ -93,18 +93,18 @@
     XCTAssertEqual(size.height, 0.0f);
 }
 
-#pragma mark - touchEventLocationAtPoint:
+#pragma mark - touchEventDataAtPoint:
 
-- (void)testTouchEventLocationAtPoint_point {
+- (void)testTouchEventDataAtPoint_point {
     self.textForTouchableLabel = @[@"Hello ", @"world!"];
     [self.touchableLabel drawTextInRect:self.touchableLabel.bounds];
     CGPoint point = CGPointMake(self.touchableLabel.frame.origin.x + 5, self.touchableLabel.frame.origin.y + 5);
-    MSPTouchEventLocation touchEventLocation = [self.touchableLabel touchEventLocationAtPoint:point];
-    XCTAssertEqual(touchEventLocation.point.x, point.x);
-    XCTAssertEqual(touchEventLocation.point.y, point.y);
+    MSPTouchEventData touchEventData = [self.touchableLabel touchEventDataAtPoint:point];
+    XCTAssertEqual(touchEventData.point.x, point.x);
+    XCTAssertEqual(touchEventData.point.y, point.y);
 }
 
-- (void)testTouchEventLocationAtPoint_index {
+- (void)testTouchEventDataAtPoint_index {
     self.textForTouchableLabel = @[@"_", @"_", @"_", @"_", @"_"];
     CGSize sizeOfFiveUnderscores = [@"_____" sizeWithAttributes:[self.touchableLabel defaultAttributes]];
     CGFloat widthOfOneUnderscore = sizeOfFiveUnderscores.width / 5;
@@ -112,21 +112,21 @@
     CGPoint point = CGPointMake((widthOfOneUnderscore * 2) + offset, 4);
     
     [self.touchableLabel drawTextInRect:self.touchableLabel.bounds];
-    MSPTouchEventLocation touchEventLocation = [self.touchableLabel touchEventLocationAtPoint:point];
+    MSPTouchEventData touchEventData = [self.touchableLabel touchEventDataAtPoint:point];
     
-    XCTAssertEqual(touchEventLocation.index, 2);
+    XCTAssertEqual(touchEventData.index, 2);
 }
 
-- (void)testTouchEventLocationAtPoint_textPieceSize {
+- (void)testTouchEventDataAtPoint_textPieceSingleLineSize {
     self.textForTouchableLabel = @[@"Hello ", @"world!"];
     [self.touchableLabel drawTextInRect:self.touchableLabel.bounds];
     CGPoint point = CGPointMake(self.touchableLabel.frame.origin.x + 5, self.touchableLabel.frame.origin.y + 5);
-    MSPTouchEventLocation touchEventLocation = [self.touchableLabel touchEventLocationAtPoint:point];
-    CGSize textPieceSize = touchEventLocation.textPieceSize;
-    XCTAssertFalse((textPieceSize.width == CGSizeZero.width && textPieceSize.height == CGSizeZero.height));
+    MSPTouchEventData touchEventData = [self.touchableLabel touchEventDataAtPoint:point];
+    CGSize textPieceSingleLineSize = touchEventData.textPieceSingleLineSize;
+    XCTAssertFalse((textPieceSingleLineSize.width == CGSizeZero.width && textPieceSingleLineSize.height == CGSizeZero.height));
 }
 
-- (void)testTouchEventLocationAtPoint_adjustedPoint {
+- (void)testTouchEventDataAtPoint_singleLineAdjustedPoint {
     self.textForTouchableLabel = @[@"_", @"_", @"_", @"_", @"_"];
     CGSize sizeOfFiveUnderscores = [@"_____" sizeWithAttributes:[self.touchableLabel defaultAttributes]];
     CGFloat widthOfOneUnderscore = sizeOfFiveUnderscores.width / 5;
@@ -134,10 +134,10 @@
     CGPoint point = CGPointMake((widthOfOneUnderscore * 2) + offset, 4);
     
     [self.touchableLabel drawTextInRect:self.touchableLabel.bounds];
-    MSPTouchEventLocation touchEventLocation = [self.touchableLabel touchEventLocationAtPoint:point];
+    MSPTouchEventData touchEventData = [self.touchableLabel touchEventDataAtPoint:point];
     
-    XCTAssertEqual(touchEventLocation.adjustedPoint.x, offset);
-    XCTAssertEqual(touchEventLocation.adjustedPoint.y, 4);
+    XCTAssertEqual(touchEventData.singleLineAdjustedPoint.x, offset);
+    XCTAssertEqual(touchEventData.singleLineAdjustedPoint.y, 4);
 }
 
 #pragma mark - sizeForTouchableLabelWithText:inRect:

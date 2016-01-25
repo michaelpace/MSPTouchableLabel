@@ -15,19 +15,19 @@ IB_DESIGNABLE
  @discussion            Representation of a touch event on an MSPTouchableLabel.
  */
 typedef struct {
-    /** Location of the touch relative to the MSPTouchableLabel. */
+    /** Location of the touch. */
     CGPoint point;
     
     /** Index of the touched piece of text (as supplied by MSPTouchableLabelDataSource's textForTouchableLabel:). */
     NSInteger index;
     
-    /** Size of the touched piece of text as if it were drawn on one line. This may or may not be how the piece of text is actually drawn. Intended to be used with MSPTouchEventLocation.adjustedPoint. */
-    CGSize textPieceSize;
+    /** Size of the touched piece of text as if it were drawn on one line. This may or may not be how the piece of text is actually drawn within the MSPTouchableLabel. Intended to be used with MSPTouchEventData.singleLineAdjustedPoint. */
+    CGSize textPieceSingleLineSize;
     
-    /** Adjusted location of the touch. Indicates where the touch fell within MSPTouchEventLocation.textPieceSize. */
-    CGPoint adjustedPoint;
+    /** Adjusted location of the touch. Indicates where the touch fell within MSPTouchEventData.textPieceSingleLineSize. */
+    CGPoint singleLineAdjustedPoint;
     
-} MSPTouchEventLocation;
+} MSPTouchEventData;
 
 @protocol MSPTouchableLabelDelegate
 
@@ -99,7 +99,7 @@ typedef struct {
  @param point           CGPoint representing a point on the MSPTouchableLabel.
  @return                Index of the element at the given point. Returns nil if there is no element at that point.
  */
-- (MSPTouchEventLocation)touchEventLocationAtPoint:(CGPoint)point;
+- (MSPTouchEventData)touchEventDataAtPoint:(CGPoint)point;
 
 /**
  @return                Returns the size an MSPTouchableLabel would occupy with the given textSections and attributes for those textSections within rect.

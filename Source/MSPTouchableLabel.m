@@ -131,7 +131,61 @@
     [self drawTextSections:textSections inRect:rect];
 }
 
-#pragma mark - ()
+#pragma mark - Public API
+
++ (CGSize)sizeForTouchableLabelGivenText:(NSArray*)textSections withAttributes:(NSArray*)attributes inRect:(CGRect)rect {
+    if (!textSections || textSections.count == 0 || rect.size.width == 0 || rect.size.height == 0) {
+        return CGSizeZero;
+    }
+
+    MSPTouchableLabel* touchableLabel = [[MSPTouchableLabel alloc] init];
+    touchableLabel.overrideAttributes = attributes;
+    [touchableLabel drawTextSections:textSections inRect:rect];
+    return touchableLabel.contentSize;
+}
+
+- (MSPTouchEventData)touchEventDataAtPoint:(CGPoint)point {
+    MSPTouchEventData touchEventData = {};
+
+    for (NSNumber* index in self.textPieceIndexToAreaMap) {
+        NSArray* areas = self.textPieceIndexToAreaMap[index];
+        CGSize textPieceSingleLineSize = CGSizeZero;
+        for (NSInteger i = 0; i < areas.count; i++) {
+            NSValue* areaWrapper = areas[i];
+            CGRect area = [areaWrapper CGRectValue];
+
+            if (CGRectContainsPoint(area, point)) {
+                CGPoint singleLineAdjustedPoint = CGPointMake(point.x - area.origin.x, point.y - area.origin.y);
+                singleLineAdjustedPoint.x += textPieceSingleLineSize.width;
+
+                for (; i < areas.count; i++) {
+                    textPieceSingleLineSize.width += area.size.width;
+                    textPieceSingleLineSize.height = MAX(textPieceSingleLineSize.height, area.size.height);
+                }
+
+                touchEventData.point = point;
+                touchEventData.index = index.integerValue;
+                touchEventData.textPieceSingleLineSize = textPieceSingleLineSize;
+                touchEventData.singleLineAdjustedPoint = singleLineAdjustedPoint;
+
+
+                return touchEventData;
+            }
+
+            textPieceSingleLineSize.width += area.size.width;
+            textPieceSingleLineSize.height = MAX(textPieceSingleLineSize.height, area.size.height);
+        }
+    }
+
+    touchEventData.point = CGPointZero;
+    touchEventData.index = -1;
+    touchEventData.textPieceSingleLineSize = CGSizeZero;
+    touchEventData.singleLineAdjustedPoint = CGPointZero;
+
+    return touchEventData;
+}
+
+#pragma mark - Private implementation
 
 - (void)drawTextSections:(NSArray*)textSections inRect:(CGRect)rect {
     // which characters should be grouped when drawing? e.g., if user passed in @[@"he", @"llo w", @"orld"], we'd want
@@ -224,51 +278,10 @@
     self.contentSize = contentSize;
 }
 
-- (MSPTouchEventLocation)touchEventLocationAtPoint:(CGPoint)point {
-    MSPTouchEventLocation touchEventLocation = {};
-    
-    for (NSNumber* index in self.textPieceIndexToAreaMap) {
-        NSArray* areas = self.textPieceIndexToAreaMap[index];
-        CGSize textPieceSize = CGSizeZero;
-        for (NSInteger i = 0; i < areas.count; i++) {
-            NSValue* areaWrapper = areas[i];
-            CGRect area = [areaWrapper CGRectValue];
-            
-            if (CGRectContainsPoint(area, point)) {
-                CGPoint adjustedPoint = CGPointMake(point.x - area.origin.x, point.y - area.origin.y);
-                adjustedPoint.x += textPieceSize.width;
-                
-                for (; i < areas.count; i++) {
-                    textPieceSize.width += area.size.width;
-                    textPieceSize.height = MAX(textPieceSize.height, area.size.height);
-                }
-                
-                touchEventLocation.point = point;
-                touchEventLocation.index = index.integerValue;
-                touchEventLocation.textPieceSize = textPieceSize;
-                touchEventLocation.adjustedPoint = adjustedPoint;
-                
-                
-                return touchEventLocation;
-            }
-            
-            textPieceSize.width += area.size.width;
-            textPieceSize.height = MAX(textPieceSize.height, area.size.height);
-        }
-    }
-    
-    touchEventLocation.point = CGPointZero;
-    touchEventLocation.index = -1;
-    touchEventLocation.textPieceSize = CGSizeZero;
-    touchEventLocation.adjustedPoint = CGPointZero;
-    
-    return touchEventLocation;
-}
-
 - (NSNumber*)indexForTouchEvent:(UIEvent*)event {
     CGPoint tapCoordinates = [event.allTouches.anyObject locationInView:self];
-    MSPTouchEventLocation touchEventLocation = [self touchEventLocationAtPoint:tapCoordinates];
-    return @(touchEventLocation.index);
+    MSPTouchEventData touchEventData = [self touchEventDataAtPoint:tapCoordinates];
+    return @(touchEventData.index);
 }
 
 - (NSDictionary*)attributesForIndex:(NSInteger)index {
@@ -368,17 +381,6 @@
     }
     
     return drawablePieceSize;
-}
-
-+ (CGSize)sizeForTouchableLabelGivenText:(NSArray*)textSections withAttributes:(NSArray*)attributes inRect:(CGRect)rect {
-    if (!textSections || textSections.count == 0 || rect.size.width == 0 || rect.size.height == 0) {
-        return CGSizeZero;
-    }
-
-    MSPTouchableLabel* touchableLabel = [[MSPTouchableLabel alloc] init];
-    touchableLabel.overrideAttributes = attributes;
-    [touchableLabel drawTextSections:textSections inRect:rect];
-    return touchableLabel.contentSize;
 }
 
 - (NSDictionary*)defaultAttributes {
