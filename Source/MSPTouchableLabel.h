@@ -75,7 +75,7 @@ typedef struct {
  @discussion            Called to discover formatting per string provided in MSPTouchableLabelDataSource's textForTouchableLabel:.
  @param touchableLabel  The current MSPTouchableLabel.
  @param index           The index of the string provided in MSPTouchableLabelDataSource's textForTouchableLabel:.
- @return                Return an NSDictionary* of key-value pairs (e.g., @{ NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:18.0f] }). Return nil if the index should use the MSPTouchableLabel's defaultAttributes.
+ @return                Return an NSDictionary* of key-value pairs (e.g., @{ NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:18.0f] }). Return nil if the index should use the label's default formatting.
  */
 - (NSDictionary*)attributesForTouchableLabel:(MSPTouchableLabel*)touchableLabel atIndex:(NSInteger)index;
 
