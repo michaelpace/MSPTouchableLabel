@@ -140,6 +140,44 @@
     XCTAssertEqual(touchEventLocation.adjustedPoint.y, 4);
 }
 
+#pragma mark - sizeForTouchableLabelWithText:inRect:
+
+- (void)testSizeForTouchableLabelGivenTextWithAttributesInRect_emptyTextSections {
+    CGSize size = [MSPTouchableLabel sizeForTouchableLabelGivenText:@[] withAttributes:nil inRect:CGRectMake(0, 0, 200, 200)];
+    XCTAssertEqual(size.width, 0);
+    XCTAssertEqual(size.height, 0);
+}
+
+- (void)testSizeForTouchableLabelGivenTextWithAttributesInRect_nilTextSections {
+    CGSize size = [MSPTouchableLabel sizeForTouchableLabelGivenText:nil withAttributes:nil inRect:CGRectMake(0, 0, 200, 200)];
+    XCTAssertEqual(size.width, 0);
+    XCTAssertEqual(size.height, 0);
+}
+
+- (void)testSizeForTouchableLabelGivenTextWithAttributesInRect_cgRectZero {
+    CGSize size = [MSPTouchableLabel sizeForTouchableLabelGivenText:@[@"Hello, this is my text!"] withAttributes:nil inRect:CGRectZero];
+    XCTAssertEqual(size.width, 0);
+    XCTAssertEqual(size.height, 0);
+}
+
+- (void)testSizeForTouchableLabelGivenTextWithAttributesInRect_valid {
+    CGSize size = [MSPTouchableLabel sizeForTouchableLabelGivenText:@[@"Hello, this is my text!"] withAttributes:nil inRect:CGRectMake(0, 0, 200, 200)];
+    XCTAssertNotEqual(size.width, 0);
+    XCTAssertNotEqual(size.height, 0);
+}
+
+- (void)testSizeForTouchableLabelGivenTextWithAttributesInRect_attributes {
+    CGSize size1 = [MSPTouchableLabel sizeForTouchableLabelGivenText:@[@"Hello, this is my text!"]
+                                                      withAttributes:@[@{ NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:18.0f] }]
+                                                              inRect:CGRectMake(0, 0, 200, 200)];
+    CGSize size2 = [MSPTouchableLabel sizeForTouchableLabelGivenText:@[@"Hello, this is my text!"]
+                                                      withAttributes:@[@{ NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:1.0f] }]
+                                                              inRect:CGRectMake(0, 0, 200, 200)];
+
+    XCTAssertGreaterThan(size1.width, size2.width);
+    XCTAssertGreaterThan(size1.height, size2.height);
+}
+
 #pragma mark - drawTextInRect:
 
 - (void)testDrawTextInRect_performance {

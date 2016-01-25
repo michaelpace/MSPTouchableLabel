@@ -101,4 +101,9 @@ typedef struct {
  */
 - (MSPTouchEventLocation)touchEventLocationAtPoint:(CGPoint)point;
 
+/**
+ @return                Returns the size an MSPTouchableLabel would occupy with the given textSections and attributes for those textSections within rect.
+ */
++ (CGSize)sizeForTouchableLabelGivenText:(NSArray*)textSections withAttributes:(NSArray*)attributes inRect:(CGRect)rect;
+
 @end

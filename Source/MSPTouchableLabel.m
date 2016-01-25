@@ -13,8 +13,10 @@
 
 @interface MSPTouchableLabel()
 
-@property (nonatomic, strong) NSMutableDictionary* indexToAreaMap;
+@property (nonatomic, strong) NSMutableDictionary* textPieceIndexToAreaMap;
 @property (nonatomic, strong) NSNumber* lastIndexTouched;
+@property (nonatomic, assign) CGSize contentSize;
+@property (nonatomic, strong) NSArray* overrideAttributes;
 
 @end
 
@@ -56,6 +58,12 @@
                               reason:@"Do not set the text property of an instance of MSPTouchableLabel. Instead, use MSPTouchableLabelDataSource to set text."
                               userInfo:nil];
     @throw exception;
+}
+
+#pragma mark - UIView
+
+- (CGSize)intrinsicContentSize {
+    return self.contentSize;
 }
 
 #pragma mark - UIResponder
@@ -120,61 +128,70 @@
 - (void)drawTextInRect:(CGRect)rect {
     NSArray* textSections = [self.dataSource textForTouchableLabel:self];
     
+    [self drawTextSections:textSections inRect:rect];
+}
+
+#pragma mark - ()
+
+- (void)drawTextSections:(NSArray*)textSections inRect:(CGRect)rect {
     // which characters should be grouped when drawing? e.g., if user passed in @[@"he", @"llo w", @"orld"], we'd want
     // the characters in "hello" to be drawn together even though they were passed in as different textSections, and same
     // with "world".
     NSArray* drawablePieces = [self drawablePiecesWithinString:[textSections componentsJoinedByString:@""]];
-    
+
     // which textSections apply to which drawablePieces? this can affect how the drawablePieces are drawn (e.g., drawablePiece "hello"
-    // being made up of 32-point black "h" and 20-point gray "ello").
+    // being made up of 32-point "h" and 20-point "ello").
     NSArray* drawablePieceToTextSectionMaps = [self mapTextSections:textSections toDrawablePieces:drawablePieces];
-    
+
     CGFloat touchableLabelWidth = rect.size.width;
     CGPoint lookaheadDrawHead = CGPointMake(0.0f, 0.0f);
     NSCharacterSet* whitespaceAndNewlineCharacterSet = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-    
+
     // as a side effect in this method, we want to populate self.indexToAreaMap so we can tell our delegate which index a user has interacted
     // with later on.
-    self.indexToAreaMap = self.indexToAreaMap ?: [[NSMutableDictionary alloc] init];
-    [self.indexToAreaMap removeAllObjects];
-    
+    self.textPieceIndexToAreaMap = self.textPieceIndexToAreaMap ?: [[NSMutableDictionary alloc] init];
+    [self.textPieceIndexToAreaMap removeAllObjects];
+
     NSString* bufferedString = @"";
     NSDictionary* attributes = nil;
     CGPoint actualDrawHead = CGPointMake(0.0f, 0.0f);
     NSDictionary* previousAttributes = nil;
-    
+
+    // as a side effect in this method, we want to note the size of the content we draw for later use in intrinsicContentSize and elsewhere.
+    CGSize contentSize = CGSizeZero;
+
     // loop through our drawablePieces and draw them.
     for (int i = 0; i < drawablePieces.count; i++) {
         NSString* drawablePiece = drawablePieces[i];
         NSArray* textSectionChunks = drawablePieceToTextSectionMaps[i];
         CGSize drawablePieceSize = [self sizeForDrawablePiece:drawablePiece withTextSectionChunks:textSectionChunks];
-        
+
         // can we fit the drawablePiece on this line or should we move it to the next line?
         if (lookaheadDrawHead.x + drawablePieceSize.width > touchableLabelWidth) {
             lookaheadDrawHead.x = 0;
             lookaheadDrawHead.y += drawablePieceSize.height;
-            
+
             if (self.multiLineRenderingOptimizationsEnabled && actualDrawHead.x == 0.0f) {
-                // if we're starting at x == 0, instead of drawing, just add a newline so we can batch drawAtPoint calls.
+                // if our draw head is at x == 0, instead of drawing, just add a newline so we can batch drawAtPoint calls.
                 bufferedString = [bufferedString stringByAppendingString:@"\n"];
             } else {
                 [bufferedString drawAtPoint:CGPointMake(actualDrawHead.x, actualDrawHead.y) withAttributes:previousAttributes];
                 actualDrawHead = CGPointMake(lookaheadDrawHead.x, lookaheadDrawHead.y);
                 bufferedString = @"";
             }
-            
+
             if ([drawablePiece stringByTrimmingCharactersInSet:whitespaceAndNewlineCharacterSet].length == 0) {
                 // don't start a new line with whitespace. might want to change this behavior in the future.
                 continue;
             }
         }
-        
+
         for (NSDictionary* chunk in textSectionChunks) {
             NSInteger textSectionIndex = [[chunk objectForKey:kMSPTouchableLabelKeyTextSectionIndex] integerValue];
             attributes = [self attributesForIndex:textSectionIndex];
             NSRange range = [[chunk objectForKey:kMSPTouchableLabelKeySubstringRange] rangeValue];
             NSString* drawablePieceSubstring = [drawablePiece substringWithRange:range];
-            
+
             // set previousAttributes to attributes the first time through the loop.
             previousAttributes = previousAttributes ?: attributes;
             if ([attributes isEqualToDictionary:previousAttributes]) {
@@ -185,32 +202,33 @@
                 actualDrawHead = CGPointMake(lookaheadDrawHead.x, lookaheadDrawHead.y);
                 bufferedString = drawablePieceSubstring;
             }
-            
+
             // record where we place this chunk!
             CGSize drawablePieceSubstringSize = [drawablePieceSubstring sizeWithAttributes:attributes];
-            NSMutableArray* areasForCurrentWord = [self.indexToAreaMap objectForKey:@(textSectionIndex)] ?: [[NSMutableArray alloc] init];
+            NSMutableArray* areasForCurrentWord = [self.textPieceIndexToAreaMap objectForKey:@(textSectionIndex)] ?: [[NSMutableArray alloc] init];
             CGRect wordArea = CGRectMake(lookaheadDrawHead.x, lookaheadDrawHead.y, drawablePieceSubstringSize.width, drawablePieceSubstringSize.height);
             // can't add primitive CGRect to a collection. wrap it into an NSValue and unwrap later.
             [areasForCurrentWord addObject:[NSValue valueWithCGRect:wordArea]];
-            [self.indexToAreaMap setObject:areasForCurrentWord forKey:@(textSectionIndex)];
-            
+            [self.textPieceIndexToAreaMap setObject:areasForCurrentWord forKey:@(textSectionIndex)];
+
+            contentSize.width = MAX(contentSize.width, wordArea.origin.x + wordArea.size.width);
+            contentSize.height = MAX(contentSize.height, wordArea.origin.y + wordArea.size.height);
+
             lookaheadDrawHead.x += drawablePieceSubstringSize.width;
             previousAttributes = attributes;
         }
     }
-    
+
     // this is the last chunk and we didn't draw it yet. draw it here.
     [bufferedString drawAtPoint:CGPointMake(actualDrawHead.x, actualDrawHead.y) withAttributes:attributes];
-    actualDrawHead = CGPointMake(lookaheadDrawHead.x, lookaheadDrawHead.y);
+    self.contentSize = contentSize;
 }
-
-#pragma mark - ()
 
 - (MSPTouchEventLocation)touchEventLocationAtPoint:(CGPoint)point {
     MSPTouchEventLocation touchEventLocation = {};
     
-    for (NSNumber* index in self.indexToAreaMap) {
-        NSArray* areas = self.indexToAreaMap[index];
+    for (NSNumber* index in self.textPieceIndexToAreaMap) {
+        NSArray* areas = self.textPieceIndexToAreaMap[index];
         CGSize textPieceSize = CGSizeZero;
         for (NSInteger i = 0; i < areas.count; i++) {
             NSValue* areaWrapper = areas[i];
@@ -255,8 +273,12 @@
 
 - (NSDictionary*)attributesForIndex:(NSInteger)index {
     NSDictionary* attributes = [self defaultAttributes];
-    
-    if ([(NSObject*)self.dataSource respondsToSelector:@selector(attributesForTouchableLabel:atIndex:)]) {
+
+    if (self.overrideAttributes) {
+        if (self.overrideAttributes.count > index) {
+            attributes = self.overrideAttributes[index];
+        }
+    } else if ([(NSObject*)self.dataSource respondsToSelector:@selector(attributesForTouchableLabel:atIndex:)]) {
         NSMutableDictionary* newAttributes = [attributes mutableCopy];
         NSDictionary* specialAttributes = [self.dataSource attributesForTouchableLabel:self atIndex:index];
         if (specialAttributes) {
@@ -346,6 +368,17 @@
     }
     
     return drawablePieceSize;
+}
+
++ (CGSize)sizeForTouchableLabelGivenText:(NSArray*)textSections withAttributes:(NSArray*)attributes inRect:(CGRect)rect {
+    if (!textSections || textSections.count == 0 || rect.size.width == 0 || rect.size.height == 0) {
+        return CGSizeZero;
+    }
+
+    MSPTouchableLabel* touchableLabel = [[MSPTouchableLabel alloc] init];
+    touchableLabel.overrideAttributes = attributes;
+    [touchableLabel drawTextSections:textSections inRect:rect];
+    return touchableLabel.contentSize;
 }
 
 - (NSDictionary*)defaultAttributes {
