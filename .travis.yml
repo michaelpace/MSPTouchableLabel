@@ -3,4 +3,5 @@ xcode_project: MSPTouchableLabel.xcodeproj
 xcode_scheme: MSPTouchableLabelTests
 xcode_sdk: iphonesimulator8.1
 before_install: rvm use $RVM_RUBY_VERSION
+install: bundle install
 after_success: slather

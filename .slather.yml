@@ -1,5 +1,3 @@
 coverage_service: coveralls
 xcodeproj: MSPTouchableLabel.xcodeproj
-ignore:
-  - Example/*
-  - MSPTouchableLabelTests/*
+source_directory: Source
